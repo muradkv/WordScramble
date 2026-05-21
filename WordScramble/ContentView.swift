@@ -14,10 +14,23 @@ struct ContentView: View {
     @State private var errorTitle = ""
     @State private var errorMessage = ""
     @State private var showingError = false
+    @State private var score = 0
     
     var body: some View {
         NavigationStack {
             List {
+                Section {
+                    HStack {
+                        Text("Score: \(score)")
+                            .font(.headline)
+                        
+                        Spacer()
+                        
+                        Button("New Game", action: newGame)
+                            .buttonStyle(.borderless)
+                    }
+                }
+                
                 Section {
                     TextField("Enter your word", text: $newWord)
                         .textInputAutocapitalization(.never)
@@ -38,6 +51,9 @@ struct ContentView: View {
             .alert(errorTitle, isPresented: $showingError) { } message: {
                 Text(errorMessage)
             }
+            .toolbar {
+                Button("New word", action: startGame)
+            }
         }
     }
     
@@ -45,6 +61,16 @@ struct ContentView: View {
         let answer = newWord.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
         
         guard !answer.isEmpty else { return }
+        
+        guard answer != rootWord else {
+            wordError(title: "Nice try", message: "You can't just copy the original word!")
+            return
+        }
+        
+        guard answer.count >= 3 else {
+            wordError(title: "Word too short", message: "Words must be at least 3 letters long.")
+            return
+        }
         
         guard isOriginal(word: answer) else {
             wordError(title: "Word used already", message: "Be more original")
@@ -65,10 +91,14 @@ struct ContentView: View {
             usedWords.insert(answer, at: 0)
         }
         
+        score += 1
         newWord = ""
     }
     
     private func startGame() {
+        usedWords.removeAll()
+        newWord = ""
+        
         if let startWordsURL = Bundle.main.url(forResource: "start", withExtension: "txt") {
             if let startWords = try? String(contentsOf: startWordsURL, encoding: .utf8) {
                 
@@ -112,6 +142,11 @@ struct ContentView: View {
         errorTitle = title
         errorMessage = message
         showingError = true
+    }
+    
+    private func newGame() {
+        score = 0
+        startGame()
     }
 }
 
