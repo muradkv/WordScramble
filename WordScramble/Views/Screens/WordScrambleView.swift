@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  WordScrambleView.swift
 //  WordScramble
 //
 //  Created by murad on 21.05.2026.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct WordScrambleView: View {
     @StateObject private var viewModel = WordScrambleViewModel()
     
     var body: some View {
@@ -53,5 +53,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    WordScrambleView()
 }
