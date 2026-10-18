@@ -21,16 +21,29 @@ Players are challenged to create as many valid anagrams as possible from a rando
 * **Smart Validation:** Real-time rule checking prevents players from using identical, overly short, impossible, or non-existent words.
 * **Score Tracking:** A persistent scoring system that rewards players for finding valid anagrams.
 * **Dual-Mode Reset:** Players can request a "New Word" via the toolbar (keeping their score) or trigger a full "New Game" hard reset directly from the list section.
+* **VoiceOver Accessibility:** Grouped word rows announce each found word and its letter count naturally in a single swipe instead of reading raw SF Symbol names.
 * **Engaging UI:** Features smooth list animations, dynamic character count icons, and clear contextual error alerts for invalid inputs.
 
 ## About the Project & Challenge
 
-This application was built to fulfill **Project 5 (Days 29-31)** of the SwiftUI learning path created by Paul Hudson (Hacking with Swift). 
+This application was built to fulfill **Project 5 (Days 29-31)** of the SwiftUI learning path created by Paul Hudson (Hacking with Swift), and later enhanced with the **Project 15 (Day 75 — Accessibility)** challenge. 
 
 The core goal of this project was to master lists, text inputs, string manipulation, and bridging older Objective-C APIs into modern Swift. Key topics practiced and improved in this project include:
 
+* **MVVM Architecture & Encapsulation:** Extracted all game rules, dictionary loading, and state management into `WordScrambleViewModel` with `private(set)` access control for unidirectional data flow.
+* **Accessibility Tree Optimization (Day 75 — Project 15 Challenge):** Applied `.accessibilityElement()` and a custom `.accessibilityLabel` inside `UsedWordRowView` to merge the SF Symbol icon and word text into one clear VoiceOver announcement (`"word, N letters"`).
 * **UIKit Bridging:** Leveraged `UITextChecker` and `NSRange` to utilize native iOS spell-checking without relying on any third-party APIs.
 * **Bundle & File Parsing:** Securely locating, loading, and parsing a `start.txt` file directly from the app bundle to seed the game's dictionary.
 * **SwiftUI Fundamentals:** Extensive use of `List`, `TextField`, `.onSubmit`, and trailing closures to build a fluid, reactive interface.
 
 🔗 **[Full project description here](https://www.hackingwithswift.com/100/swiftui/29)**
+🔗 **[Accessibility challenge (Day 75)](https://www.hackingwithswift.com/100/swiftui/75)**
+
+## Project Versioning & Changelog
+
+- **v2.1.0 (VoiceOver Accessibility & View Composition)** — commit: `b38ba57`  
+  Completed the Day 75 accessibility challenge. Reorganized files into MVVM folders, renamed the root screen to `WordScrambleView`, and extracted `UsedWordRowView` with grouped VoiceOver labels for natural word and letter count announcements.
+- **v2.0.0 (MVVM Architecture Migration)** — commit: `81e9303`  
+  Extracted game logic, validation rules, and bundle loading from the view into `WordScrambleViewModel` with encapsulated `@Published private(set)` state properties.
+- **v1.0.0 (Functional MVP Release)** — commit: `1a58793`  
+  Initial game implementation fulfilling Project 5 requirements and challenges, including `UITextChecker` validation, minimum word length rules, score tracking, and dual-mode game reset.
