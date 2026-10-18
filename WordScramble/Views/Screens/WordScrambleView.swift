@@ -32,10 +32,7 @@ struct WordScrambleView: View {
                 
                 Section {
                     ForEach(viewModel.usedWords, id: \.self) { word in
-                        HStack {
-                            Image(systemName: "\(word.count).circle")
-                            Text(word)
-                        }
+                        UsedWordRowView(word: word)
                     }
                 }
             }
